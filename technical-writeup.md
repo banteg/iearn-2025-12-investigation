@@ -34,7 +34,7 @@ The attacker realized profit primarily as ~`245,643` TUSD plus ~`6,845` USDC sen
 - yUSDC: `0xd6ad7a6750a7593e092a9b218d66c0a814a3436e`
 - yPool swap: `0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51`
 - yPool LP token (yCRV): `0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8`
-- Yearn vault (yy…): `0x5dbcf33d8c2e976c6b560249878e6f1491bca25c`
+- Yearn vault (yyDAI+yUSDC+yUSDT+yTUSD): `0x5dbcf33d8c2e976c6b560249878e6f1491bca25c`
 
 **bZx / “Fulcrum” leg**
 - iSUSD (misconfigured yTUSD lender): `0x49f4592e641820e928f9919ef4abd92a719b4b49`
@@ -116,7 +116,7 @@ This matters because:
 - `withdraw()` computes redemption `r = pool * shares / totalSupply` using that pool value, but it always pays out **TUSD**, letting an attacker redeem against “phantom” value.
 - `rebalance()` is permissionless and, when it takes the `_withdrawAll()` path, it calls `_withdrawFulcrum()` which burns `iSUSD` and redeems **sUSD** to `yTUSD`. Since `_calcPoolValueInToken()` only counts TUSD + lender balances (not arbitrary tokens like `sUSD`), the redeemed `sUSD` becomes *unpriced/unaccounted* inside `yTUSD`.
 - `deposit()` mints shares using `shares = amount * totalSupply / pool` with `pool = _calcPoolValueInToken()` computed *before* the transfer, with no minimum-pool sanity checks. Once the accounted pool is near-zero (dust), minting becomes effectively unbounded.
-- In this tx, just before the `1,000 TUSD` deposit, the accounted pool was `1,000,000,000` wei of TUSD (and all lender balances were `0`) while `totalSupply` was ~`117,004.400475...` yTUSD, resulting in a mint of ≈`1.17e35` yTUSD units.
+- In this tx, just before the `1,000 TUSD` deposit, the accounted pool was `1,000,000,000` wei of TUSD (and all lender balances were `0`) while `totalSupply` was `117,004.400475278030262758` yTUSD, resulting in a mint of ≈`1.17e35` yTUSD units.
 
 ### 2) Curve yPool: trusts `getPricePerFullShare()` as the yToken “rate”
 
@@ -143,9 +143,9 @@ Using on-chain reads at `block 24027659` (pre) vs `24027660` (post):
   - `totalSupply`: `1.540e23` → `1.170e35`
   - `getPricePerFullShare`: `1.596e18` → `8546`
 - **Curve yPool / yCRV**
-  - `yCRV totalSupply`: `7.079,360.726…` → `638,277,854.757…`
+  - `yCRV totalSupply`: `7,079,360.726138501888235006` → `638,277,854.757388048421719648`
   - `yPool.get_virtual_price`: `1.262e16` → `2.629e13` (≈ **480× collapse**)
-- **Yearn vault share price helper** (`0xfcdef208…::getPrice(yVault)`)
+- **Yearn vault share price helper** (`0xfcdef208eccb87008b9f2240c8bc9b3591e0295c::getPrice(yVault)`)
   - `1.480e16` → `3.085e13` (≈ **480× collapse**)
 - **STABLEx**
   - `totalSupply` increases by **~`3.9M`**, while its vault-share collateral becomes nearly worthless after the yPool collapse.
@@ -156,12 +156,12 @@ This was a cascading, composability-driven failure:
 
 1) The attacker abused `yTUSD`’s misconfigured `fulcrum` adapter (`iSUSD`) plus fragile `shares = amount * totalSupply / pool` minting to create a dust-sized accounted pool with non-zero supply, then inflated `totalSupply` and drove `getPricePerFullShare()` near-zero.
 2) Curve yPool accepted `yTUSD` as one of its coins; once `yTUSD` became “infinite” in supply, the attacker could push the pool into an irrecoverably imbalanced state, extracting the valuable coins and leaving the pool holding almost exclusively `yTUSD`.
-3) The yPool LP token (`yCRV`) and the Yearn vault share (`yy…`) were used as collateral by `STABLEx` via an oracle path that multiplies by `yPool.get_virtual_price()`. After the pool was drained/imbalanced, the collateral price collapsed, leaving the newly-minted `STABLEx` effectively unbacked.
+3) The yPool LP token (`yCRV`) and the Yearn vault share (`yyDAI+yUSDC+yUSDT+yTUSD`) were used as collateral by `STABLEx` via an oracle path that multiplies by `yPool.get_virtual_price()`. After the pool was drained/imbalanced, the collateral price collapsed, leaving the newly-minted `STABLEx` effectively unbacked.
 
 ## Attacker profit
 
 Directly sent to the attacker EOA at the end of the transaction:
-- **`245,643.069533…` TUSD**
+- **`245,643.069533673447582107` TUSD**
 - **`6,845.147604` USDC**
 
 Additionally, the attacker paid a `0.01 ETH` bribe to the block fee recipient early in the tx.
