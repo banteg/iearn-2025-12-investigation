@@ -1,0 +1,11 @@
+{
+  "address": "0xaea0065e146fd75dc24465961a583827284d405a",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xaea0065e146fd75dc24465961a583827284d405a",
+  "error": null,
+  "filesSaved": 5,
+  "httpStatus": 200,
+  "label": "Synthetix: Exchanger 3",
+  "retrievedAt": "2025-12-17T04:11:57+00:00",
+  "status": "full"
+}

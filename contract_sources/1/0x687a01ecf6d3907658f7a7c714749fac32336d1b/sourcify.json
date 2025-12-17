@@ -1,0 +1,11 @@
+{
+  "address": "0x687a01ecf6d3907658f7a7c714749fac32336d1b",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x687a01ecf6d3907658f7a7c714749fac32336d1b",
+  "error": null,
+  "filesSaved": 11,
+  "httpStatus": 200,
+  "label": "BeaconProxy",
+  "retrievedAt": "2025-12-17T04:11:59+00:00",
+  "status": "full"
+}

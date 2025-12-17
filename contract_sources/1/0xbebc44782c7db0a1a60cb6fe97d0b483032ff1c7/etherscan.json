@@ -1,0 +1,12 @@
+{
+  "address": "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
+  "apiMessage": "OK",
+  "apiStatus": "1",
+  "chainId": 1,
+  "endpoint": "https://api.etherscan.io/v2/api?apikey=CXM94DEJTUH5KQRDK2IHHQCJBVRQRTTK5Y&chainid=1&module=contract&action=getsourcecode&address=0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
+  "error": null,
+  "filesSaved": 1,
+  "httpStatus": 200,
+  "label": "Curve.fi: DAI/USDC/USDT Pool",
+  "retrievedAt": "2025-12-17T04:25:29+00:00"
+}

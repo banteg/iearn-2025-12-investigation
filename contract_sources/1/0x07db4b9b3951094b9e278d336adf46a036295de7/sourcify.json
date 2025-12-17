@@ -1,0 +1,11 @@
+{
+  "address": "0x07db4b9b3951094b9e278d336adf46a036295de7",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x07db4b9b3951094b9e278d336adf46a036295de7",
+  "error": null,
+  "filesSaved": 4,
+  "httpStatus": 200,
+  "label": "StrategyCurveYVoterProxy",
+  "retrievedAt": "2025-12-17T04:11:55+00:00",
+  "status": "partial"
+}

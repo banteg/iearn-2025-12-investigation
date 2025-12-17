@@ -1,0 +1,11 @@
+{
+  "address": "0x590bb03b651129c7931d1cc3128f50868178da50",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x590bb03b651129c7931d1cc3128f50868178da50",
+  "error": null,
+  "filesSaved": 4,
+  "httpStatus": 200,
+  "label": "Proxy_590b_da50",
+  "retrievedAt": "2025-12-17T04:11:58+00:00",
+  "status": "partial"
+}

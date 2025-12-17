@@ -1,0 +1,11 @@
+{
+  "address": "0x02d84abd89ee9db409572f19b6e1596c301f3c81",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x02d84abd89ee9db409572f19b6e1596c301f3c81",
+  "error": null,
+  "filesSaved": 30,
+  "httpStatus": 200,
+  "label": "0x02d8_LendingPool",
+  "retrievedAt": "2025-12-17T04:11:56+00:00",
+  "status": "partial"
+}

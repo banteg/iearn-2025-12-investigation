@@ -1,0 +1,11 @@
+{
+  "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+  "error": null,
+  "filesSaved": 3,
+  "httpStatus": 200,
+  "label": "WBTC",
+  "retrievedAt": "2025-12-17T04:12:00+00:00",
+  "status": "partial"
+}

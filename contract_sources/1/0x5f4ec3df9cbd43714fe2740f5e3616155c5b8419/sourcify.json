@@ -1,0 +1,11 @@
+{
+  "address": "0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+  "error": null,
+  "filesSaved": 4,
+  "httpStatus": 200,
+  "label": "Chainlink: ETH/USD Price Feed",
+  "retrievedAt": "2025-12-17T04:11:58+00:00",
+  "status": "partial"
+}

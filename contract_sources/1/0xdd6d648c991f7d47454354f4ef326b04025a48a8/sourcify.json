@@ -1,0 +1,11 @@
+{
+  "address": "0xdd6d648c991f7d47454354f4ef326b04025a48a8",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xdd6d648c991f7d47454354f4ef326b04025a48a8",
+  "error": null,
+  "filesSaved": 3,
+  "httpStatus": 200,
+  "label": "IEarnAPRWithPool",
+  "retrievedAt": "2025-12-17T04:12:01+00:00",
+  "status": "partial"
+}

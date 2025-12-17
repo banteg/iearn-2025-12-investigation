@@ -1,0 +1,11 @@
+{
+  "address": "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51",
+  "error": "Files have not been found!",
+  "filesSaved": 0,
+  "httpStatus": 404,
+  "label": "Curve.fi: y Swap",
+  "retrievedAt": "2025-12-17T04:11:57+00:00",
+  "status": null
+}

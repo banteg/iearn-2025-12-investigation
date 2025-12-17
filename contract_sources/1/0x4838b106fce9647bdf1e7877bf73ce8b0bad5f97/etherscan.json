@@ -1,0 +1,12 @@
+{
+  "address": "0x4838b106fce9647bdf1e7877bf73ce8b0bad5f97",
+  "apiMessage": "OK",
+  "apiStatus": "1",
+  "chainId": 1,
+  "endpoint": "https://api.etherscan.io/v2/api?apikey=CXM94DEJTUH5KQRDK2IHHQCJBVRQRTTK5Y&chainid=1&module=contract&action=getsourcecode&address=0x4838b106fce9647bdf1e7877bf73ce8b0bad5f97",
+  "error": "No SourceCode in Etherscan response",
+  "filesSaved": 0,
+  "httpStatus": 200,
+  "label": "Titan Builder",
+  "retrievedAt": "2025-12-17T04:25:26+00:00"
+}

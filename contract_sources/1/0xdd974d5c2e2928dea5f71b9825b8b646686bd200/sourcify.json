@@ -1,0 +1,11 @@
+{
+  "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+  "error": null,
+  "filesSaved": 2,
+  "httpStatus": 200,
+  "label": "KNC",
+  "retrievedAt": "2025-12-17T04:11:55+00:00",
+  "status": "partial"
+}

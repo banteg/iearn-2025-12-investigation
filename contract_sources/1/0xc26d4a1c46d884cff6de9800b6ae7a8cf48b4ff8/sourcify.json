@@ -1,0 +1,11 @@
+{
+  "address": "0xc26d4a1c46d884cff6de9800b6ae7a8cf48b4ff8",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xc26d4a1c46d884cff6de9800b6ae7a8cf48b4ff8",
+  "error": null,
+  "filesSaved": 29,
+  "httpStatus": 200,
+  "label": "0xc26d_PriceCapAdapterStable",
+  "retrievedAt": "2025-12-17T04:12:01+00:00",
+  "status": "full"
+}

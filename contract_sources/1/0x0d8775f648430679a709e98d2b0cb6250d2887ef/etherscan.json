@@ -1,0 +1,12 @@
+{
+  "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+  "apiMessage": "OK",
+  "apiStatus": "1",
+  "chainId": 1,
+  "endpoint": "https://api.etherscan.io/v2/api?apikey=CXM94DEJTUH5KQRDK2IHHQCJBVRQRTTK5Y&chainid=1&module=contract&action=getsourcecode&address=0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+  "error": null,
+  "filesSaved": 1,
+  "httpStatus": 200,
+  "label": "BAT",
+  "retrievedAt": "2025-12-17T04:25:21+00:00"
+}

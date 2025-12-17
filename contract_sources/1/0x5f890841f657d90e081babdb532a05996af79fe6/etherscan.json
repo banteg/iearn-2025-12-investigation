@@ -1,0 +1,12 @@
+{
+  "address": "0x5f890841f657d90e081babdb532a05996af79fe6",
+  "apiMessage": "OK",
+  "apiStatus": "1",
+  "chainId": 1,
+  "endpoint": "https://api.etherscan.io/v2/api?apikey=CXM94DEJTUH5KQRDK2IHHQCJBVRQRTTK5Y&chainid=1&module=contract&action=getsourcecode&address=0x5f890841f657d90e081babdb532a05996af79fe6",
+  "error": null,
+  "filesSaved": 1,
+  "httpStatus": 200,
+  "label": "Curve.fi: 3Pool Implementation Contract",
+  "retrievedAt": "2025-12-17T04:25:28+00:00"
+}

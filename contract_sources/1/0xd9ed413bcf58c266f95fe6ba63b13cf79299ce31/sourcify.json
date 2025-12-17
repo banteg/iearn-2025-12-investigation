@@ -1,0 +1,11 @@
+{
+  "address": "0xd9ed413bcf58c266f95fe6ba63b13cf79299ce31",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xd9ed413bcf58c266f95fe6ba63b13cf79299ce31",
+  "error": null,
+  "filesSaved": 18,
+  "httpStatus": 200,
+  "label": "StakedTokenIncentivesController",
+  "retrievedAt": "2025-12-17T04:12:00+00:00",
+  "status": "full"
+}

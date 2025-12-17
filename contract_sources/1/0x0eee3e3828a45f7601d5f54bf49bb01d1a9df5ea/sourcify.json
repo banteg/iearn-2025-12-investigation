@@ -1,0 +1,11 @@
+{
+  "address": "0x0eee3e3828a45f7601d5f54bf49bb01d1a9df5ea",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x0eee3e3828a45f7601d5f54bf49bb01d1a9df5ea",
+  "error": null,
+  "filesSaved": 3,
+  "httpStatus": 200,
+  "label": "Lendf.Me",
+  "retrievedAt": "2025-12-17T04:11:57+00:00",
+  "status": "partial"
+}

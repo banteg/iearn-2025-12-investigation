@@ -1,0 +1,11 @@
+{
+  "address": "0xfc08aadc7a1a93857f6296c3fb78aba1d286533a",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xfc08aadc7a1a93857f6296c3fb78aba1d286533a",
+  "error": null,
+  "filesSaved": 8,
+  "httpStatus": 200,
+  "label": "0xfc08_UpgradeableBeacon",
+  "retrievedAt": "2025-12-17T04:11:55+00:00",
+  "status": "full"
+}

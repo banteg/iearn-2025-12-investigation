@@ -1,0 +1,11 @@
+{
+  "address": "0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c",
+  "error": null,
+  "filesSaved": 3,
+  "httpStatus": 200,
+  "label": "Aave: Aave Collector V2",
+  "retrievedAt": "2025-12-17T04:11:55+00:00",
+  "status": "full"
+}

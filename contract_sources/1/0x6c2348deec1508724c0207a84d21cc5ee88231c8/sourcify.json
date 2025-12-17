@@ -1,0 +1,11 @@
+{
+  "address": "0x6c2348deec1508724c0207a84d21cc5ee88231c8",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x6c2348deec1508724c0207a84d21cc5ee88231c8",
+  "error": null,
+  "filesSaved": 49,
+  "httpStatus": 200,
+  "label": "PancakeV3Pool",
+  "retrievedAt": "2025-12-17T04:11:55+00:00",
+  "status": "partial"
+}

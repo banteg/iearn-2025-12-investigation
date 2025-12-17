@@ -1,0 +1,11 @@
+{
+  "address": "0x7eb59373d63627be64b42406b108b602174b4ccc",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x7eb59373d63627be64b42406b108b602174b4ccc",
+  "error": null,
+  "filesSaved": 68,
+  "httpStatus": 200,
+  "label": "UniswapV3Pool",
+  "retrievedAt": "2025-12-17T04:11:59+00:00",
+  "status": "partial"
+}

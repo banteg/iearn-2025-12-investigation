@@ -1,0 +1,11 @@
+{
+  "address": "0x972f10e309857ee725f2e4c24025efff0a21944f",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x972f10e309857ee725f2e4c24025efff0a21944f",
+  "error": null,
+  "filesSaved": 29,
+  "httpStatus": 200,
+  "label": "RewardsDistributor",
+  "retrievedAt": "2025-12-17T04:12:01+00:00",
+  "status": "full"
+}

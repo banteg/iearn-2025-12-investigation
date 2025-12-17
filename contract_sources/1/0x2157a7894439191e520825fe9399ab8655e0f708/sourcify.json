@@ -1,0 +1,11 @@
+{
+  "address": "0x2157a7894439191e520825fe9399ab8655e0f708",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x2157a7894439191e520825fe9399ab8655e0f708",
+  "error": "Files have not been found!",
+  "filesSaved": 0,
+  "httpStatus": 404,
+  "label": "Uniswap Exchange Template",
+  "retrievedAt": "2025-12-17T04:12:00+00:00",
+  "status": null
+}

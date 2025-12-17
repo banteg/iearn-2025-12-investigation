@@ -1,0 +1,11 @@
+{
+  "address": "0x05a9cbe762b36632b3594da4f082340e0e5343e8",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x05a9cbe762b36632b3594da4f082340e0e5343e8",
+  "error": null,
+  "filesSaved": 4,
+  "httpStatus": 200,
+  "label": "Synthetix: Token State sUSD",
+  "retrievedAt": "2025-12-17T04:11:59+00:00",
+  "status": "partial"
+}

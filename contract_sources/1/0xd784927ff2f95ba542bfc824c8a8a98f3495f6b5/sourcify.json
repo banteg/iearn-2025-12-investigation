@@ -1,0 +1,11 @@
+{
+  "address": "0xd784927ff2f95ba542bfc824c8a8a98f3495f6b5",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xd784927ff2f95ba542bfc824c8a8a98f3495f6b5",
+  "error": null,
+  "filesSaved": 5,
+  "httpStatus": 200,
+  "label": "Aave: Incentives Controller",
+  "retrievedAt": "2025-12-17T04:11:57+00:00",
+  "status": "partial"
+}

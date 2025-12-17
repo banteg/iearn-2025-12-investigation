@@ -1,0 +1,11 @@
+{
+  "address": "0x76b47460d7f7c5222cfb6b6a75615ab10895dde4",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x76b47460d7f7c5222cfb6b6a75615ab10895dde4",
+  "error": null,
+  "filesSaved": 4,
+  "httpStatus": 200,
+  "label": "ChainlinkProxyPriceProvider",
+  "retrievedAt": "2025-12-17T04:11:58+00:00",
+  "status": "partial"
+}

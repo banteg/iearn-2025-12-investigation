@@ -1,0 +1,11 @@
+{
+  "address": "0x14c4525f47a7f7c984474979c57a2dccb8eacb39",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x14c4525f47a7f7c984474979c57a2dccb8eacb39",
+  "error": null,
+  "filesSaved": 19,
+  "httpStatus": 200,
+  "label": "0x14c4_TransparentUpgradeableProxy",
+  "retrievedAt": "2025-12-17T04:11:58+00:00",
+  "status": "full"
+}

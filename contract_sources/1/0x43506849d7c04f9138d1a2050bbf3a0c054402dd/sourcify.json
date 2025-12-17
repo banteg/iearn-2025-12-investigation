@@ -1,0 +1,11 @@
+{
+  "address": "0x43506849d7c04f9138d1a2050bbf3a0c054402dd",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x43506849d7c04f9138d1a2050bbf3a0c054402dd",
+  "error": null,
+  "filesSaved": 25,
+  "httpStatus": 200,
+  "label": "FiatTokenV2_2",
+  "retrievedAt": "2025-12-17T04:11:55+00:00",
+  "status": "partial"
+}

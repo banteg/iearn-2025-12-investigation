@@ -1,0 +1,11 @@
+{
+  "address": "0x582d6d131e93d81676e82f032b2dfa638f4e3275",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x582d6d131e93d81676e82f032b2dfa638f4e3275",
+  "error": null,
+  "filesSaved": 73,
+  "httpStatus": 200,
+  "label": "ResilientOracle",
+  "retrievedAt": "2025-12-17T04:12:00+00:00",
+  "status": "full"
+}

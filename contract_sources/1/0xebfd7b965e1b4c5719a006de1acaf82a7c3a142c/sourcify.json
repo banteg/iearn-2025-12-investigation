@@ -1,0 +1,11 @@
+{
+  "address": "0xebfd7b965e1b4c5719a006de1acaf82a7c3a142c",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xebfd7b965e1b4c5719a006de1acaf82a7c3a142c",
+  "error": null,
+  "filesSaved": 4,
+  "httpStatus": 200,
+  "label": "ARCx: yUSD-STABLEx-CoreProxy",
+  "retrievedAt": "2025-12-17T04:11:56+00:00",
+  "status": "partial"
+}

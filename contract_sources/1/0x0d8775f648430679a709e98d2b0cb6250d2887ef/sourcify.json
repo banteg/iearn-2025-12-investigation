@@ -1,0 +1,11 @@
+{
+  "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+  "error": "Files have not been found!",
+  "filesSaved": 0,
+  "httpStatus": 404,
+  "label": "BAT",
+  "retrievedAt": "2025-12-17T04:11:58+00:00",
+  "status": null
+}

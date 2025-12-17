@@ -1,0 +1,11 @@
+{
+  "address": "0x5f890841f657d90e081babdb532a05996af79fe6",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x5f890841f657d90e081babdb532a05996af79fe6",
+  "error": "Files have not been found!",
+  "filesSaved": 0,
+  "httpStatus": 404,
+  "label": "Curve.fi: 3Pool Implementation Contract",
+  "retrievedAt": "2025-12-17T04:11:56+00:00",
+  "status": null
+}

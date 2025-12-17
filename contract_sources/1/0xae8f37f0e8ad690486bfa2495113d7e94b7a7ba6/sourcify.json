@@ -1,0 +1,11 @@
+{
+  "address": "0xae8f37f0e8ad690486bfa2495113d7e94b7a7ba6",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xae8f37f0e8ad690486bfa2495113d7e94b7a7ba6",
+  "error": null,
+  "filesSaved": 3,
+  "httpStatus": 200,
+  "label": "APRWithPoolOracle",
+  "retrievedAt": "2025-12-17T04:11:55+00:00",
+  "status": "partial"
+}

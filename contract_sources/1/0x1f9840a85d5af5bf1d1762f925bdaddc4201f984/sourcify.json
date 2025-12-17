@@ -1,0 +1,11 @@
+{
+  "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+  "error": null,
+  "filesSaved": 4,
+  "httpStatus": 200,
+  "label": "UNI",
+  "retrievedAt": "2025-12-17T04:11:56+00:00",
+  "status": "partial"
+}

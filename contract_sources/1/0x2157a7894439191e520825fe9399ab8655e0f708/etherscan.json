@@ -1,0 +1,12 @@
+{
+  "address": "0x2157a7894439191e520825fe9399ab8655e0f708",
+  "apiMessage": "OK",
+  "apiStatus": "1",
+  "chainId": 1,
+  "endpoint": "https://api.etherscan.io/v2/api?apikey=CXM94DEJTUH5KQRDK2IHHQCJBVRQRTTK5Y&chainid=1&module=contract&action=getsourcecode&address=0x2157a7894439191e520825fe9399ab8655e0f708",
+  "error": null,
+  "filesSaved": 1,
+  "httpStatus": 200,
+  "label": "Uniswap Exchange Template",
+  "retrievedAt": "2025-12-17T04:25:22+00:00"
+}

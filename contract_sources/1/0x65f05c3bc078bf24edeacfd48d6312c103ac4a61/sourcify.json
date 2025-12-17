@@ -1,0 +1,11 @@
+{
+  "address": "0x65f05c3bc078bf24edeacfd48d6312c103ac4a61",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x65f05c3bc078bf24edeacfd48d6312c103ac4a61",
+  "error": null,
+  "filesSaved": 7,
+  "httpStatus": 200,
+  "label": "0x65f0_CLSynchronicityPriceAdapterBaseToPeg",
+  "retrievedAt": "2025-12-17T04:11:55+00:00",
+  "status": "full"
+}

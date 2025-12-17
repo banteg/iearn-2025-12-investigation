@@ -1,0 +1,11 @@
+{
+  "address": "0x24a42fd28c976a61df5d00d0599c34c4f90748c8",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x24a42fd28c976a61df5d00d0599c34c4f90748c8",
+  "error": null,
+  "filesSaved": 3,
+  "httpStatus": 200,
+  "label": "Aave: Lending Pool Provider V1",
+  "retrievedAt": "2025-12-17T04:11:59+00:00",
+  "status": "partial"
+}

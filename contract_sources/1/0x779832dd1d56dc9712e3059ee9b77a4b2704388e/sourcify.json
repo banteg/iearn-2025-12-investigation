@@ -1,0 +1,11 @@
+{
+  "address": "0x779832dd1d56dc9712e3059ee9b77a4b2704388e",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0x779832dd1d56dc9712e3059ee9b77a4b2704388e",
+  "error": null,
+  "filesSaved": 3,
+  "httpStatus": 200,
+  "label": "LoanTokenLogicV4",
+  "retrievedAt": "2025-12-17T04:11:58+00:00",
+  "status": "partial"
+}

@@ -1,0 +1,11 @@
+{
+  "address": "0xe1ba0fb44ccb0d11b80f92f4f8ed94ca3ff51d00",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xe1ba0fb44ccb0d11b80f92f4f8ed94ca3ff51d00",
+  "error": null,
+  "filesSaved": 4,
+  "httpStatus": 200,
+  "label": "aBAT",
+  "retrievedAt": "2025-12-17T04:11:55+00:00",
+  "status": "partial"
+}

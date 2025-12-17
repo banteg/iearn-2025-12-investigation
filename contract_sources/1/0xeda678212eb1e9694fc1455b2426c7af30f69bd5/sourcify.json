@@ -1,0 +1,11 @@
+{
+  "address": "0xeda678212eb1e9694fc1455b2426c7af30f69bd5",
+  "chainId": 1,
+  "endpoint": "https://sourcify.dev/server/files/any/1/0xeda678212eb1e9694fc1455b2426c7af30f69bd5",
+  "error": null,
+  "filesSaved": 21,
+  "httpStatus": 200,
+  "label": "0xeda6_aTUSD",
+  "retrievedAt": "2025-12-17T04:11:57+00:00",
+  "status": "full"
+}
