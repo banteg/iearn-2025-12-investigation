@@ -157,7 +157,7 @@ YUSDOracle.fetchCurrentPrice()
 
 ## Observable State Changes
 
-All values below are shown in human-readable units (token decimals applied), rounded for publication (see `WRITEUP.md` for full precision).
+All values below are shown in human-readable units (token decimals applied), rounded for publication (see `technical-writeup.md` for full precision).
 
 | Metric | Pre-Attack (Block 24,027,659) | Post-Attack (Block 24,027,660) | Change |
 |--------|-------------------------------|--------------------------------|--------|
