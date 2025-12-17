@@ -1,0 +1,5 @@
+[project]
+name = "iearn-2025-12-investigation"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = []
