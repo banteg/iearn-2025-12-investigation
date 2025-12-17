@@ -15,7 +15,7 @@ Artifacts used:
 
 The attacker used a Morpho flashloan to set up a cascading failure across:
 
-1) `yTUSD` (iearn/Yearn v1 token) share accounting + a misconfigured lending adapter (`fulcrum = iSUSD`), enabling an extreme `totalSupply` inflation from a dust-sized “pool” state,  
+1) `yTUSD` (iearn token) share accounting + a misconfigured lending adapter (`fulcrum = iSUSD`), enabling an extreme `totalSupply` inflation from a dust-sized “pool” state,  
 2) Curve’s `yDAI+yUSDC+yUSDT+yTUSD` swap (`yPool`) to trade newly-inflated `yTUSD` into the pool’s valuable `yDAI`/`yUSDC`, collapsing the pool and its LP token (`yCRV`) virtual price,  
 3) downstream oracle consumers (`yyDAI+yUSDC+yUSDT+yTUSD` Yearn vault collateral in systems like `STABLEx` and `CreamY`) that relied on the `yPool` virtual price, leaving newly-minted debt effectively unbacked.
 
@@ -28,12 +28,12 @@ The attacker realized profit primarily as ~`245,643` TUSD plus ~`6,845` USDC sen
 - USDC: `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48`
 - Curve 3pool (USDC⇄DAI): `0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7`
 
-**Yearn / Curve primitives**
+** iEarn / Yearn / Curve primitives**
 - yTUSD (target): `0x73a052500105205d34daf004eab301916da8190f`
 - yDAI: `0x16de59092dae5ccf4a1e6439d611fd0653f0bd01`
 - yUSDC: `0xd6ad7a6750a7593e092a9b218d66c0a814a3436e`
 - yPool swap: `0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51`
-- yPool LP token (`yDAI+yUSDC+yUSDT+yTUSD`, Curve “yCRV”): `0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8` (not Yearn veCRV/yLocker)
+- yPool LP token (`yDAI+yUSDC+yUSDT+yTUSD`, Curve “yCRV”): `0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8` (not related to Yearn veCRV/yLocker)
 - Yearn vault (yyDAI+yUSDC+yUSDT+yTUSD): `0x5dbcf33d8c2e976c6b560249878e6f1491bca25c`
 
 **bZx / “Fulcrum” leg**
@@ -109,7 +109,7 @@ The attacker then swaps inflated `yTUSD` into the Curve yPool:
 
 This step collapses the value of the yPool LP token and anything downstream that prices via `yPool.get_virtual_price()`.
 
-Important context: these are **yTokens** (Yearn v1 wrappers). The “multi-million” `yUSDC`/`yDAI` outputs above are largely the attacker unwinding the **flashloan-funded liquidity they injected earlier** in phase A (they deposited `7,763,100.306848` yUSDC and `9,619,877.888306040694508586` yDAI into yPool to mint yCRV/vault shares). The yPool’s **pre-tx** DAI-equivalent value was only ≈`89,359.767637274681457720` (computed as `yCRV.totalSupply * yPool.get_virtual_price / 1e18` at block `24027659`), dominated by ≈`60,935.496389705735688835` from the pool’s existing `yTUSD` position.
+Important context: these are **yTokens** (iEarn wrappers). The “multi-million” `yUSDC`/`yDAI` outputs above are largely the attacker unwinding the **flashloan-funded liquidity they injected earlier** in phase A (they deposited `7,763,100.306848` yUSDC and `9,619,877.888306040694508586` yDAI into yPool to mint yCRV/vault shares). The yPool’s **pre-tx** DAI-equivalent value was only ≈`89,359.767637274681457720` (computed as `yCRV.totalSupply * yPool.get_virtual_price / 1e18` at block `24027659`), dominated by ≈`60,935.496389705735688835` from the pool’s existing `yTUSD` position.
 At that same block, `yDAI`/`yUSDC` were still valuable/redeemable (PPS ≈`1.143` / `1.288`), while `yUSDT` already had an extremely devalued `getPricePerFullShare()` (`7,983,011`), explaining why the pool’s real value was in the ~`$89k` range despite very large nominal `yUSDT` balances.
 
 ## Root cause (code-level)

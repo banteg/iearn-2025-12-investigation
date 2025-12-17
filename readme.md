@@ -35,7 +35,7 @@ The attack demonstrates how legacy DeFi infrastructure with misconfigured adapte
 | USDC | `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` |
 | Curve 3pool | `0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7` |
 
-### Yearn / Curve Primitives
+### iEarn / Yearn / Curve Primitives
 
 | Contract | Address |
 |----------|---------|
@@ -108,7 +108,7 @@ Note: in this document, `yCRV` refers to the Curve yPool LP token above, and is 
 
 The pool now holds almost exclusively worthless yTUSD, collapsing `get_virtual_price()` by ~480×.
 
-Important context: the swap outputs above are **yTokens** (Yearn wrappers) and `yDAI`/`yUSDC` are valuable/redeemable tokens; the “multi-million” amounts mainly reflect the attacker unwinding the flashloan-funded liquidity they injected earlier to mint yCRV/vault shares. Immediately pre-tx, yPool’s total DAI-equivalent value was only ~$89k (mostly yTUSD exposure, ~$61k), and that value was largely wiped once `yTUSD.getPricePerFullShare()` collapsed.
+Important context: the swap outputs above are **yTokens** (iEarn wrappers) and `yDAI`/`yUSDC` are valuable/redeemable tokens; the “multi-million” amounts mainly reflect the attacker unwinding the flashloan-funded liquidity they injected earlier to mint yCRV/vault shares. Immediately pre-tx, yPool’s total DAI-equivalent value was only ~$89k (mostly yTUSD exposure, ~$61k), and that value was largely wiped once `yTUSD.getPricePerFullShare()` collapsed.
 
 ### Phase 4: Profit Extraction
 
