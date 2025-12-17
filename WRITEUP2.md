@@ -9,7 +9,7 @@
 | **Network** | Ethereum Mainnet |
 | **Attacker EOA** | `0xcaca279dff5110efa61091becf577911a2fa4cc3` |
 | **Attack Contract** | `0x67e0c4cfc88b98b9ed718b49b8d2f812df738e42` |
-| **Estimated Profit** | ~245,643.069533… TUSD + ~6,845.147604 USDC |
+| **Estimated Profit** | ~245,643 TUSD + ~6,845 USDC |
 
 ---
 
@@ -69,38 +69,38 @@ The attack demonstrates how legacy DeFi infrastructure with misconfigured adapte
 ### Phase 1: Setup & Collateral Positioning
 
 1. **Flashloan** — Borrow 30,000,000 USDC from Morpho
-2. **Mint yCRV** — Add liquidity to Curve yPool, receiving 631,198,494.031249546533484642 yCRV
-3. **Deposit to Yearn Vault** — Convert yCRV to 538,020,736.299402297777586076 vault shares
-4. **Collateralize STABLEx** — Deposit 532,640,528.936408274799810215 vault shares as collateral
+2. **Mint yCRV** — Add liquidity to Curve yPool, receiving ~631,198,494.031 yCRV
+3. **Deposit to Yearn Vault** — Convert yCRV to ~538,020,736.299 vault shares
+4. **Collateralize STABLEx** — Deposit ~532,640,528.936 vault shares as collateral
 5. **Mint STABLEx** — Borrow 3,900,000 STABLEx against the collateral
 
 ### Phase 2: yTUSD Share Manipulation
 
-1. **Initial deposit** — Deposit 1,169,030.283812964608450554 TUSD into yTUSD, receiving 732,294.516582120883883370 yTUSD shares
+1. **Initial deposit** — Deposit ~1,169,030.284 TUSD into yTUSD, receiving ~732,294.517 yTUSD shares
 
-2. **Inject foreign asset** — Mint 213,848.030480998433828584 iSUSD and transfer to yTUSD contract
+2. **Inject foreign asset** — Mint ~213,848.030 iSUSD and transfer to yTUSD contract
    - The `fulcrum` adapter is misconfigured to point to iSUSD (sUSD-based) instead of a TUSD lender
    - This inflates `calcPoolValueInToken()` via `balanceFulcrumInToken()`
 
-3. **Redeem against inflated value** — Burn 769,318.060321814735010119 yTUSD to receive 1,414,919.509067819317145700 TUSD
+3. **Redeem against inflated value** — Burn ~769,318.060 yTUSD to receive ~1,414,919.509 TUSD
    - Redemption pays out TUSD but calculates value using the iSUSD-inflated pool
 
 4. **Trigger rebalance** — Call `yTUSD.rebalance()` which:
-   - Calls `_withdrawFulcrum()`, burning iSUSD and redeeming 215,192.931789489849544490 sUSD
+   - Calls `_withdrawFulcrum()`, burning iSUSD and redeeming ~215,192.932 sUSD
    - The sUSD lands in yTUSD but is **not counted** by `_calcPoolValueInToken()`
 
-5. **Create dust state** — Transfer 0.000000001 TUSD (1,000,000,000 wei) to yTUSD
-   - Accounted pool value: 1,000,000,000 wei of TUSD
+5. **Create dust state** — Transfer 1e-9 TUSD (1,000,000,000 wei) to yTUSD
+   - Accounted pool value: 1e-9 TUSD
    - Actual holdings: ~215k sUSD (unaccounted)
 
 6. **Catastrophic inflation** — Deposit 1,000 TUSD into yTUSD
-   - Mints **117004400475278030262758000000000000** yTUSD units (≈1.17×10³⁵ units) due to `shares = amount × totalSupply / pool`
-   - `getPricePerFullShare()` collapses from ~1.596 to ~0.000000000000008546
+   - Mints ≈`1.17×10^35` yTUSD units (≈`1.17×10^17` yTUSD) due to `shares = amount × totalSupply / pool`
+   - `getPricePerFullShare()` collapses from ~`1.596` to ~`8.546×10^-15`
 
 ### Phase 3: Drain Curve yPool
 
-1. **First swap** — Exchange 9,000,000 yTUSD → 7,812,398.141451 yUSDC
-2. **Second swap** — Exchange ~1.17×10³⁵ yTUSD → 9,623,355.344648053457184368 yDAI
+1. **First swap** — Exchange 9,000,000 yTUSD → ~7,812,398.141 yUSDC
+2. **Second swap** — Exchange ~1.17×10³⁵ yTUSD → ~9,623,355.345 yDAI
 
 The pool now holds almost exclusively worthless yTUSD, collapsing `get_virtual_price()` by ~480×.
 
@@ -109,7 +109,7 @@ The pool now holds almost exclusively worthless yTUSD, collapsing `get_virtual_p
 1. The STABLEx collateral (Yearn vault shares) is now nearly worthless
 2. Unwind positions and convert to stablecoins
 3. Repay Morpho flashloan
-4. Transfer profits to EOA: **245,643.069533… TUSD + 6,845.147604 USDC**
+4. Transfer profits to EOA: **~245,643 TUSD + ~6,845 USDC**
 
 ---
 
@@ -157,15 +157,15 @@ YUSDOracle.fetchCurrentPrice()
 
 ## Observable State Changes
 
-All values below are shown in human-readable units (token decimals applied), not raw 1e18-scaled integers.
+All values below are shown in human-readable units (token decimals applied), rounded for publication (see `WRITEUP.md` for full precision).
 
 | Metric | Pre-Attack (Block 24,027,659) | Post-Attack (Block 24,027,660) | Change |
 |--------|-------------------------------|--------------------------------|--------|
-| `yTUSD.totalSupply()` | 154,027.944214… | 117,004,400,475,395,034.663233… | +7.6×10¹¹× |
-| `yTUSD.getPricePerFullShare()` | 1.596393605771138332 | 0.000000000000008546 | −1.87×10¹⁴× |
-| `yPool.get_virtual_price()` | 0.012622575836168294 | 0.000026299154296405 | −480× |
-| `yCRV.totalSupply()` | 7,079,360.726… | 638,277,854.757… | +90× |
-| `PriceHelper.getPrice(yVault)` | 0.014808631565737513 | 0.000030853804446950 | −480× |
+| `yTUSD.totalSupply()` | ~1.54e5 | ~1.17e17 | +7.6×10¹¹× |
+| `yTUSD.getPricePerFullShare()` | ~1.596 | ~8.546e-15 | −1.87×10¹⁴× |
+| `yPool.get_virtual_price()` | ~0.012623 | ~0.000026299 | −480× |
+| `yCRV.totalSupply()` | ~7.08e6 | ~6.38e8 | +90× |
+| `PriceHelper.getPrice(yVault)` | ~0.014809 | ~0.000030854 | −480× |
 
 ---
 
@@ -174,18 +174,18 @@ All values below are shown in human-readable units (token decimals applied), not
 ### Pre-Attack State
 
 ```
-yPool.get_virtual_price():       0.012622575836168294
-yTUSD.totalSupply():             154027.944214971881389507
-yTUSD.getPricePerFullShare():    1.596393605771138332
-yTUSD.calcPoolValueInToken():    245889.225254854708695146
+yPool.get_virtual_price():       0.012623
+yTUSD.totalSupply():             154,027.9442
+yTUSD.getPricePerFullShare():    1.596394
+yTUSD.calcPoolValueInToken():    245,889.2253
 
 yPool balances:
-  [0] yDAI:  8570.257917582282210487
-  [1] yUSDC: 7331.295489
-  [2] yUSDT: 1155435163868000.148458
-  [3] yTUSD: 38170.721913077839510356
+  [0] yDAI:  8,570.2579
+  [1] yUSDC: 7,331.2955
+  [2] yUSDT: 1.155e15
+  [3] yTUSD: 38,170.7219
 
-TUSD.balanceOf(yTUSD): 41500.966780168697123545
+TUSD.balanceOf(yTUSD): 41,500.9668
 iSUSD.balanceOf(yTUSD): 0
 sUSD.balanceOf(yTUSD):  0
 ```
@@ -193,20 +193,20 @@ sUSD.balanceOf(yTUSD):  0
 ### Post-Attack State
 
 ```
-yPool.get_virtual_price():       0.000026299154296405
-yTUSD.totalSupply():             117004400475395034.663233278030262758
-yTUSD.getPricePerFullShare():    0.000000000000008546
-yTUSD.calcPoolValueInToken():    1000.000000001000000000
+yPool.get_virtual_price():       0.000026299
+yTUSD.totalSupply():             1.17e17
+yTUSD.getPricePerFullShare():    8.546e-15
+yTUSD.calcPoolValueInToken():    1,000.000000001
 
 yPool balances:
-  [0] yDAI:  2577.200761248215866821
-  [1] yUSDC: 2853.266490
-  [2] yUSDT: 1148537077944059.151140
-  [3] yTUSD: 117004400475279165.301427568453077463
+  [0] yDAI:  2,577.2008
+  [1] yUSDC: 2,853.2665
+  [2] yUSDT: 1.149e15
+  [3] yTUSD: 1.17e17
 
-TUSD.balanceOf(yTUSD): 1000.000000001000000000
+TUSD.balanceOf(yTUSD): 1,000.000000001
 iSUSD.balanceOf(yTUSD): 0
-sUSD.balanceOf(yTUSD):  215192.931789489849544490  ← Stranded, unaccounted
+sUSD.balanceOf(yTUSD):  215,192.9318  ← Stranded, unaccounted
 ```
 
 ---
