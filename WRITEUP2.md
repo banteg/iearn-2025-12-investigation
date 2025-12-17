@@ -157,13 +157,15 @@ YUSDOracle.fetchCurrentPrice()
 
 ## Observable State Changes
 
+All values below are shown in human-readable units (token decimals applied), not raw 1e18-scaled integers.
+
 | Metric | Pre-Attack (Block 24,027,659) | Post-Attack (Block 24,027,660) | Change |
 |--------|-------------------------------|--------------------------------|--------|
-| `yTUSD.totalSupply()` | 1.540e23 | 1.170e35 | +7.6×10¹¹× |
-| `yTUSD.getPricePerFullShare()` | 1.596e18 | 8546 | −1.87×10¹⁴× |
-| `yPool.get_virtual_price()` | 1.262e16 | 2.629e13 | −480× |
+| `yTUSD.totalSupply()` | 154,027.944214… | 117,004,400,475,395,034.663233… | +7.6×10¹¹× |
+| `yTUSD.getPricePerFullShare()` | 1.596393605771138332 | 0.000000000000008546 | −1.87×10¹⁴× |
+| `yPool.get_virtual_price()` | 0.012622575836168294 | 0.000026299154296405 | −480× |
 | `yCRV.totalSupply()` | 7,079,360.726… | 638,277,854.757… | +90× |
-| `PriceHelper.getPrice(yVault)` | 1.480e16 | 3.085e13 | −480× |
+| `PriceHelper.getPrice(yVault)` | 0.014808631565737513 | 0.000030853804446950 | −480× |
 
 ---
 
