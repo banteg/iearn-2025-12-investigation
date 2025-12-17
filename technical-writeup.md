@@ -17,7 +17,7 @@ The attacker used a Morpho flashloan to set up a cascading failure across:
 
 1) `yTUSD` (iearn/Yearn v1 token) share accounting + a misconfigured lending adapter (`fulcrum = iSUSD`), enabling an extreme `totalSupply` inflation from a dust-sized “pool” state,  
 2) Curve’s `yDAI+yUSDC+yUSDT+yTUSD` swap (`yPool`) to trade newly-inflated `yTUSD` into the pool’s valuable `yDAI`/`yUSDC`, collapsing the pool and its LP token (`yCRV`) virtual price,  
-3) downstream collateral systems (`yyDAI+yUSDC+yUSDT+yTUSD` Yearn vault and `STABLEx`) that relied on the `yPool` virtual price, leaving newly-minted `STABLEx` effectively unbacked.
+3) downstream oracle consumers (`yyDAI+yUSDC+yUSDT+yTUSD` Yearn vault collateral in systems like `STABLEx` and `CreamY`) that relied on the `yPool` virtual price, leaving newly-minted debt effectively unbacked.
 
 The attacker realized profit primarily as ~`245,643` TUSD plus ~`6,845` USDC sent to the EOA, while leaving a large undercollateralized `STABLEx` position backed by now-nearly-worthless vault shares.
 

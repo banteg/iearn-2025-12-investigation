@@ -18,8 +18,8 @@
 An attacker exploited a cascading failure across multiple DeFi protocols:
 
 1. **yTUSD (iEarn)** — Abused a misconfigured lending adapter and fragile share-minting logic to inflate `totalSupply` from ~154k yTUSD to ~1.17×10¹⁷ yTUSD
-2. **Curve yPool** — Drained valuable `yDAI`/`yUSDC` by trading worthless inflated `yTUSD` into the pool
-3. **STABLEx** — Minted ~3.9M tokens against collateral that became worthless after the yPool collapse
+2. **Curve yPool** — Collapsed yPool/yCRV pricing by swapping inflated `yTUSD` (and largely unwinding flashloan-funded liquidity), leaving the pool holding mostly worthless yTUSD
+3. **STABLEx & CreamY (cyUSD)** — Oracle consumers relying on yPool virtual price; attacker minted ~3.9M STABLEx against collateral that became worthless after the yPool collapse
 
 The attack demonstrates how legacy DeFi infrastructure with misconfigured adapters can create systemic risk across composable protocols.
 
@@ -62,7 +62,8 @@ Note: in this document, `yCRV` refers to the Curve yPool LP token above, and is 
 | STABLEx Token | `0xcd91538b91b4ba7797d39a2f66e63810b50a33d0` |
 | YUSDOracle | `0x4e5d8e00a630a50016ffdca3d955aca2e73fe9f0` |
 | RiskOracle | `0x4cc91e0c97c5128247e71a5ddf01ca46f4fa8d1d` |
-| PriceHelper (`getPrice(address)`) | `0xfcdef208eccb87008b9f2240c8bc9b3591e0295c` |
+| CreamY (cyUSD / swap) | `0x1d09144f3479bb805cb7c92346987420bcbdc10c` |
+| CreamY normalizer / price helper (`getPrice(address)`) | `0xfcdef208eccb87008b9f2240c8bc9b3591e0295c` |
 
 ---
 
