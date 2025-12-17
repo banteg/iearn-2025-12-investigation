@@ -17,7 +17,7 @@
 
 An attacker exploited a cascading failure across multiple DeFi protocols:
 
-1. **yTUSD (Yearn v1)** — Abused a misconfigured lending adapter and fragile share-minting logic to inflate `totalSupply` from ~154k yTUSD to ~1.17×10¹⁷ yTUSD (≈1.17×10³⁵ units)
+1. **yTUSD (iEarn)** — Abused a misconfigured lending adapter and fragile share-minting logic to inflate `totalSupply` from ~154k yTUSD to ~1.17×10¹⁷ yTUSD
 2. **Curve yPool** — Drained valuable `yDAI`/`yUSDC` by trading worthless inflated `yTUSD` into the pool
 3. **STABLEx** — Minted ~3.9M tokens against collateral that became worthless after the yPool collapse
 
@@ -94,7 +94,7 @@ The attack demonstrates how legacy DeFi infrastructure with misconfigured adapte
    - Actual holdings: ~215k sUSD (unaccounted)
 
 6. **Catastrophic inflation** — Deposit 1,000 TUSD into yTUSD
-   - Mints ≈`1.17×10^35` yTUSD units (≈`1.17×10^17` yTUSD) due to `shares = amount × totalSupply / pool`
+   - Mints ≈`1.17×10^17` yTUSD due to `shares = amount × totalSupply / pool`
    - `getPricePerFullShare()` collapses from ~`1.596` to ~`8.546×10^-15`
 
 ### Phase 3: Drain Curve yPool
