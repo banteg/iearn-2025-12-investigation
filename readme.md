@@ -43,8 +43,10 @@ The attack demonstrates how legacy DeFi infrastructure with misconfigured adapte
 | yDAI | `0x16de59092dae5ccf4a1e6439d611fd0653f0bd01` |
 | yUSDC | `0xd6ad7a6750a7593e092a9b218d66c0a814a3436e` |
 | yPool (Curve swap) | `0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51` |
-| yCRV (yPool LP token) | `0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8` |
+| yCRV (Curve yPool LP: yDAI+yUSDC+yUSDT+yTUSD) | `0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8` |
 | Yearn Vault (yyDAI+yUSDC+yUSDT+yTUSD) | `0x5dbcf33d8c2e976c6b560249878e6f1491bca25c` |
+
+Note: in this document, `yCRV` refers to the Curve yPool LP token above, and is unrelated to Yearn veCRV/yLocker products.
 
 ### bZx / Fulcrum
 
@@ -88,6 +90,7 @@ The attack demonstrates how legacy DeFi infrastructure with misconfigured adapte
 4. **Trigger rebalance** — Call `yTUSD.rebalance()` which:
    - Calls `_withdrawFulcrum()`, burning iSUSD and redeeming ~215,192.932 sUSD
    - The sUSD lands in yTUSD but is **not counted** by `_calcPoolValueInToken()`
+   - This sUSD originated from the attacker (spent to mint the donated iSUSD) and becomes trapped/unaccounted inside yTUSD
 
 5. **Create dust state** — Transfer 1e-9 TUSD (1,000,000,000 wei) to yTUSD
    - Accounted pool value: 1e-9 TUSD
@@ -103,6 +106,8 @@ The attack demonstrates how legacy DeFi infrastructure with misconfigured adapte
 2. **Second swap** — Exchange ~1.17×10³⁵ yTUSD → ~9,623,355.345 yDAI
 
 The pool now holds almost exclusively worthless yTUSD, collapsing `get_virtual_price()` by ~480×.
+
+Important context: the swap outputs above are **yTokens** (Yearn wrappers) and `yDAI`/`yUSDC` are valuable/redeemable tokens; the “multi-million” amounts mainly reflect the attacker unwinding the flashloan-funded liquidity they injected earlier to mint yCRV/vault shares. Immediately pre-tx, yPool’s total DAI-equivalent value was only ~$89k (mostly yTUSD exposure, ~$61k), and that value was largely wiped once `yTUSD.getPricePerFullShare()` collapsed.
 
 ### Phase 4: Profit Extraction
 

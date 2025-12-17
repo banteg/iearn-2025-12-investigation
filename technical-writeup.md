@@ -33,7 +33,7 @@ The attacker realized profit primarily as ~`245,643` TUSD plus ~`6,845` USDC sen
 - yDAI: `0x16de59092dae5ccf4a1e6439d611fd0653f0bd01`
 - yUSDC: `0xd6ad7a6750a7593e092a9b218d66c0a814a3436e`
 - yPool swap: `0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51`
-- yPool LP token (yCRV): `0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8`
+- yPool LP token (`yDAI+yUSDC+yUSDT+yTUSD`, Curve “yCRV”): `0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8` (not Yearn veCRV/yLocker)
 - Yearn vault (yyDAI+yUSDC+yUSDT+yTUSD): `0x5dbcf33d8c2e976c6b560249878e6f1491bca25c`
 
 **bZx / “Fulcrum” leg**
@@ -44,7 +44,8 @@ The attacker realized profit primarily as ~`245,643` TUSD plus ~`6,845` USDC sen
 - STABLEx token: `0xcd91538b91b4ba7797d39a2f66e63810b50a33d0`
 - STABLEx collateral oracle (YUSDOracle): `0x4e5d8e00a630a50016ffdca3d955aca2e73fe9f0`
 - RiskOracle (yPool virtual price → ETH price): `0x4cc91e0c97c5128247e71a5ddf01ca46f4fa8d1d`
-- Price helper used in swaps (`getPrice(address)`): `0xfcdef208eccb87008b9f2240c8bc9b3591e0295c`
+- CreamY (cyUSD / swap): `0x1d09144f3479bb805cb7c92346987420bcbdc10c`
+- CreamY normalizer / price helper (`getPrice(address)`): `0xfcdef208eccb87008b9f2240c8bc9b3591e0295c`
 
 ## What happened (high level)
 
@@ -63,6 +64,9 @@ All quantities below are directly observable in the transaction trace and ERC-20
 - Morpho flashloan: **30,000,000 USDC**
 - Curve yPool `add_liquidity([yDAI,yUSDC,0,0], min=0)` mints:
   - **`631,198,494.031249546533484642` yCRV**
+- Curve yPool `add_liquidity` inputs:
+  - **`9,619,877.888306040694508586` yDAI**
+  - **`7,763,100.306848` yUSDC**
 - Yearn vault deposit of that yCRV mints:
   - **`538,020,736.299402297777586076` vault shares**
 - Vault shares transferred as collateral to STABLEx:
@@ -87,6 +91,7 @@ All quantities below are directly observable in the transaction trace and ERC-20
 4) **Remove iSUSD from the accounting path, but keep its underlying inside yTUSD**:
 - `yTUSD.rebalance()` triggers `_withdrawAll()` which calls `_withdrawFulcrum()` and burns the `iSUSD`, redeeming **`215,192.931789489849544490` sUSD** to `yTUSD`.
 - `sUSD` is not included in `_calcPoolValueInToken()`, so this leaves `yTUSD` with assets that its own pricing/accounting ignores.
+  - This `sUSD` originated from the attacker (spent to mint the donated `iSUSD`) and is effectively trapped/unaccounted inside `yTUSD`, acting as attack “fuel”.
 
 5) **Force a dust-sized accounted pool and trigger catastrophic supply inflation**:
 - Transfer **`0.000000001` TUSD** (`1,000,000,000` wei) to `yTUSD` so that (accounted) pool value is effectively dust and non-zero.
@@ -103,6 +108,9 @@ The attacker then swaps inflated `yTUSD` into the Curve yPool:
   - **`9,623,355.344648053457184368` yDAI**
 
 This step collapses the value of the yPool LP token and anything downstream that prices via `yPool.get_virtual_price()`.
+
+Important context: these are **yTokens** (Yearn v1 wrappers). The “multi-million” `yUSDC`/`yDAI` outputs above are largely the attacker unwinding the **flashloan-funded liquidity they injected earlier** in phase A (they deposited `7,763,100.306848` yUSDC and `9,619,877.888306040694508586` yDAI into yPool to mint yCRV/vault shares). The yPool’s **pre-tx** DAI-equivalent value was only ≈`89,359.767637274681457720` (computed as `yCRV.totalSupply * yPool.get_virtual_price / 1e18` at block `24027659`), dominated by ≈`60,935.496389705735688835` from the pool’s existing `yTUSD` position.
+At that same block, `yDAI`/`yUSDC` were still valuable/redeemable (PPS ≈`1.143` / `1.288`), while `yUSDT` already had an extremely devalued `getPricePerFullShare()` (`7,983,011`), explaining why the pool’s real value was in the ~`$89k` range despite very large nominal `yUSDT` balances.
 
 ## Root cause (code-level)
 
