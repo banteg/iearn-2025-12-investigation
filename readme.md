@@ -211,35 +211,6 @@ sUSD.balanceOf(yTUSD):  215,192.9318  ← Stranded, unaccounted
 
 ---
 
-## Reproduction
-
-```bash
-TX=0x78921ce8d0361193b0d34bc76800ef4754ba9151a1837492f17c559f23771c43
-
-# Transaction details
-cast receipt $TX --rpc-url $ETH_RPC_URL
-cast run $TX --rpc-url $ETH_RPC_URL --trace
-
-# Before/after price comparisons
-cast call 0x73a052500105205d34daf004eab301916da8190f \
-  'getPricePerFullShare()(uint256)' \
-  --block 24027659 --rpc-url $ETH_RPC_URL
-
-cast call 0x73a052500105205d34daf004eab301916da8190f \
-  'getPricePerFullShare()(uint256)' \
-  --block 24027660 --rpc-url $ETH_RPC_URL
-
-cast call 0x45F783CCE6B7FF23B2ab2D70e416cdb7D6055f51 \
-  'get_virtual_price()(uint256)' \
-  --block 24027659 --rpc-url $ETH_RPC_URL
-
-cast call 0x45F783CCE6B7FF23B2ab2D70e416cdb7D6055f51 \
-  'get_virtual_price()(uint256)' \
-  --block 24027660 --rpc-url $ETH_RPC_URL
-```
-
----
-
 ## Mitigation Recommendations
 
 ### Immediate Actions
@@ -281,6 +252,3 @@ This exploit chained three distinct vulnerabilities across legacy DeFi infrastru
 
 The attack highlights the systemic risks of composability when legacy contracts remain integrated into modern DeFi systems. Protocols should audit their dependencies for deprecated or misconfigured adapters, implement rate sanity checks, and avoid direct reliance on manipulable price feeds for critical operations.
 
----
-
-*Analysis prepared December 2025*
