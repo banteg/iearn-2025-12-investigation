@@ -117,7 +117,7 @@ The pool now holds almost exclusively worthless yTUSD, collapsing `get_virtual_p
 
 ### Vulnerability 1: yTUSD Misconfigured Fulcrum Adapter
 
-In `yTUSD.sol`, the `fulcrum` variable is hardcoded to `0x49f4592E...` (bZx iSUSD), which has sUSD as its underlying asset—not TUSD.
+In `yTUSD.sol`, the `fulcrum` variable is hardcoded to `0x49f4592e641820e928f9919ef4abd92a719b4b49` (bZx iSUSD), which has sUSD as its underlying asset—not TUSD.
 
 **Impact:**
 
@@ -251,4 +251,3 @@ This exploit chained three distinct vulnerabilities across legacy DeFi infrastru
 3. Direct oracle dependencies on manipulable on-chain price feeds
 
 The attack highlights the systemic risks of composability when legacy contracts remain integrated into modern DeFi systems. Protocols should audit their dependencies for deprecated or misconfigured adapters, implement rate sanity checks, and avoid direct reliance on manipulable price feeds for critical operations.
-

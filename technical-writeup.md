@@ -77,7 +77,7 @@ All quantities below are directly observable in the transaction trace and ERC-20
 - mints **`732,294.516582120883883370` yTUSD**
 
 2) **Inject a foreign asset (iSUSD) into yTUSD’s “pool value” accounting**:
-- The `yTUSD` contract is configured with `fulcrum = 0x49f4592E...` (bZx `iSUSD`, underlying `sUSD`), so holding `iSUSD` increases `calcPoolValueInToken()` via `assetBalanceOf()`.
+- The `yTUSD` contract is configured with `fulcrum = 0x49f4592e641820e928f9919ef4abd92a719b4b49` (bZx `iSUSD`, underlying `sUSD`), so holding `iSUSD` increases `calcPoolValueInToken()` via `assetBalanceOf()`.
 - The attacker mints **`213,848.030480998433828584` iSUSD** and transfers it to `yTUSD`.
 
 3) **Redeem yTUSD shares against the inflated pool value**:
@@ -108,7 +108,7 @@ This step collapses the value of the yPool LP token and anything downstream that
 
 ### 1) yTUSD: misconfigured “Fulcrum” lender + fragile share minting
 
-**Misconfiguration:** in `contract_sources/1/0x73a052500105205d34daf004eab301916da8190f/sources/yTUSD.sol`, the underlying `token` is TrueUSD (`TUSD`), but `fulcrum` is hardcoded to `0x49f4592E...` (bZx `iSUSD`, underlying `sUSD`).
+**Misconfiguration:** in `contract_sources/1/0x73a052500105205d34daf004eab301916da8190f/sources/yTUSD.sol`, the underlying `token` is TrueUSD (`TUSD`), but `fulcrum` is hardcoded to `0x49f4592e641820e928f9919ef4abd92a719b4b49` (bZx `iSUSD`, underlying `sUSD`).
 
 This matters because:
 
