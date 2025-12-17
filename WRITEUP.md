@@ -15,7 +15,7 @@ Artifacts used:
 
 The attacker used a Morpho flashloan to set up a cascading failure across:
 
-1) `yTUSD` (iearn/Yearn v1 token) share accounting, enabling an extreme `totalSupply` inflation from a dust-sized “balance” state,  
+1) `yTUSD` (iearn/Yearn v1 token) share accounting + a misconfigured lending adapter (`fulcrum = iSUSD`), enabling an extreme `totalSupply` inflation from a dust-sized “pool” state,  
 2) Curve’s `yDAI+yUSDC+yUSDT+yTUSD` swap (`yPool`) to trade newly-inflated `yTUSD` into the pool’s valuable `yDAI`/`yUSDC`, collapsing the pool and its LP token (`yCRV`) virtual price,  
 3) downstream collateral systems (`yyDAI+yUSDC+yUSDT+yTUSD` Yearn vault and `STABLEx`) that relied on the `yPool` virtual price, leaving newly-minted `STABLEx` effectively unbacked.
 
@@ -36,9 +36,13 @@ The attacker realized profit primarily as ~`245,643` TUSD plus ~`6,845` USDC sen
 - yPool LP token (yCRV): `0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8`
 - Yearn vault (yy…): `0x5dbcf33d8c2e976c6b560249878e6f1491bca25c`
 
+**bZx / “Fulcrum” leg**
+- iSUSD (misconfigured yTUSD lender): `0x49f4592e641820e928f9919ef4abd92a719b4b49`
+
 **Downstream system**
 - STABLEx core proxy: `0xebfd7b965e1b4c5719a006de1acaf82a7c3a142c`
 - STABLEx token: `0xcd91538b91b4ba7797d39a2f66e63810b50a33d0`
+- STABLEx collateral oracle (YUSDOracle): `0x4e5d8e00a630a50016ffdca3d955aca2e73fe9f0`
 - RiskOracle (yPool virtual price → ETH price): `0x4cc91e0c97c5128247e71a5ddf01ca46f4fa8d1d`
 - Price helper used in swaps (`getPrice(address)`): `0xfcdef208eccb87008b9f2240c8bc9b3591e0295c`
 
@@ -68,21 +72,25 @@ All quantities below are directly observable in the transaction trace and ERC-20
 
 ### B) yTUSD share-state manipulation and supply inflation
 
-1) **Acquire/route TUSD**, then deposit into `yTUSD`:
+1) **Deposit TUSD to mint yTUSD shares**:
 - `yTUSD.deposit(1,169,030.283812964608450554 TUSD)`
 - mints **`732,294.516582120883883370` yTUSD**
 
-2) **Withdraw from yTUSD**, pulling out the vault’s liquid TUSD/aTUSD component:
+2) **Inject a foreign asset (iSUSD) into yTUSD’s “pool value” accounting**:
+- The `yTUSD` contract is configured with `fulcrum = 0x49f4592E...` (bZx `iSUSD`, underlying `sUSD`), so holding `iSUSD` increases `calcPoolValueInToken()` via `assetBalanceOf()`.
+- The attacker mints **`213,848.030480998433828584` iSUSD** and transfers it to `yTUSD`.
+
+3) **Redeem yTUSD shares against the inflated pool value**:
 - burn **`769,318.060321814735010119` yTUSD**
 - receive **`1,414,919.509067819317145700` TUSD**
 
-3) **Convert iSUSD → sUSD inside yTUSD**, then force a dust-sized TUSD “balance”:
-- Mint and transfer **`213,848.030480998433828584` iSUSD** to `yTUSD`, then `yTUSD` burns it and receives **`215,192.931789489849544490` sUSD**
-- Transfer **`0.000000001` TUSD** (`1,000,000,000` wei) to `yTUSD`
+4) **Remove iSUSD from the accounting path, but keep its underlying inside yTUSD**:
+- `yTUSD.rebalance()` triggers `_withdrawAll()` which calls `_withdrawFulcrum()` and burns the `iSUSD`, redeeming **`215,192.931789489849544490` sUSD** to `yTUSD`.
+- `sUSD` is not included in `_calcPoolValueInToken()`, so this leaves `yTUSD` with assets that its own pricing/accounting ignores.
 
-4) **Trigger catastrophic supply inflation**:
-- `yTUSD.deposit(1,000 TUSD)` with a near-zero TUSD “balance” mints:
-  - **`117,004,400,475,278,030,262,758,000,000,000,000,000` yTUSD**
+5) **Force a dust-sized accounted pool and trigger catastrophic supply inflation**:
+- Transfer **`0.000000001` TUSD** (`1,000,000,000` wei) to `yTUSD` so that (accounted) pool value is effectively dust and non-zero.
+- `yTUSD.deposit(1,000 TUSD)` mints **`117004400475278030262758000000000000`** yTUSD (≈`1.17e35` units).
 - `yTUSD.getPricePerFullShare()` collapses from ~`1.596e18` pre-tx to **`8546`** post-tx.
 
 ### C) Drain Curve yPool using inflated yTUSD
@@ -95,6 +103,37 @@ The attacker then swaps inflated `yTUSD` into the Curve yPool:
   - **`9,623,355.344648053457184368` yDAI**
 
 This step collapses the value of the yPool LP token and anything downstream that prices via `yPool.get_virtual_price()`.
+
+## Root cause (code-level)
+
+### 1) yTUSD: misconfigured “Fulcrum” lender + fragile share minting
+
+**Misconfiguration:** in `contract_sources/1/0x73a052500105205d34daf004eab301916da8190f/sources/yTUSD.sol`, the underlying `token` is TrueUSD (`TUSD`), but `fulcrum` is hardcoded to `0x49f4592E...` (bZx `iSUSD`, underlying `sUSD`).
+
+This matters because:
+
+- `calcPoolValueInToken()` includes `balanceFulcrumInToken()` (which calls `Fulcrum(fulcrum).assetBalanceOf(address(this))` when `iSUSD` is present), so *anyone can donate iSUSD to inflate the pool value*.
+- `withdraw()` computes redemption `r = pool * shares / totalSupply` using that pool value, but it always pays out **TUSD**, letting an attacker redeem against “phantom” value.
+- `rebalance()` is permissionless and, when it takes the `_withdrawAll()` path, it calls `_withdrawFulcrum()` which burns `iSUSD` and redeems **sUSD** to `yTUSD`. Since `_calcPoolValueInToken()` only counts TUSD + lender balances (not arbitrary tokens like `sUSD`), the redeemed `sUSD` becomes *unpriced/unaccounted* inside `yTUSD`.
+- `deposit()` mints shares using `shares = amount * totalSupply / pool` with `pool = _calcPoolValueInToken()` computed *before* the transfer, with no minimum-pool sanity checks. Once the accounted pool is near-zero (dust), minting becomes effectively unbounded.
+- In this tx, just before the `1,000 TUSD` deposit, the accounted pool was `1,000,000,000` wei of TUSD (and all lender balances were `0`) while `totalSupply` was ~`117,004.400475...` yTUSD, resulting in a mint of ≈`1.17e35` yTUSD units.
+
+### 2) Curve yPool: trusts `getPricePerFullShare()` as the yToken “rate”
+
+In `contract_sources/1/0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51/sources/Vyper_contract.vy`, `_stored_rates()` multiplies each coin’s precision multiplier by `yERC20(self.coins[i]).getPricePerFullShare()`.
+
+Once `yTUSD.getPricePerFullShare()` collapses, yPool treats yTUSD as nearly worthless per unit, and the attacker can supply astronomical amounts of yTUSD (minted from dust) to drain the pool’s valuable yDAI/yUSDC.
+
+### 3) STABLEx pricing: directly depends on yPool virtual price
+
+The STABLEx collateral oracle pulls price from:
+
+- `contract_sources/1/0x4e5d8e00a630a50016ffdca3d955aca2e73fe9f0/sources/contracts/oracle/YUSDOracle.sol`:
+  - `fetchCurrentPrice()` multiplies `yUSD.getPricePerFullShare()` by `aaveRiskOracle.latestAnswer()` and Chainlink ETH/USD.
+- `contract_sources/1/0x4cc91e0c97c5128247e71a5ddf01ca46f4fa8d1d/sources/RiskOracle.sol`:
+  - `latestAnswer()` is the **min stablecoin price in ETH** (from Aave oracle) multiplied by `yPool.get_virtual_price()`.
+
+So collapsing `yPool.get_virtual_price()` collapses the collateral price used by STABLEx, turning the attacker’s freshly-minted debt into a large undercollateralized position.
 
 ## Observable impact (before vs after)
 
@@ -115,9 +154,9 @@ Using on-chain reads at `block 24027659` (pre) vs `24027660` (post):
 
 This was a cascading, composability-driven failure:
 
-1) The attacker forced `yTUSD` into a state where a small deposit minted an astronomically large `yTUSD` supply (via a dust-balance / non-zero-supply situation).
+1) The attacker abused `yTUSD`’s misconfigured `fulcrum` adapter (`iSUSD`) plus fragile `shares = amount * totalSupply / pool` minting to create a dust-sized accounted pool with non-zero supply, then inflated `totalSupply` and drove `getPricePerFullShare()` near-zero.
 2) Curve yPool accepted `yTUSD` as one of its coins; once `yTUSD` became “infinite” in supply, the attacker could push the pool into an irrecoverably imbalanced state, extracting the valuable coins and leaving the pool holding almost exclusively `yTUSD`.
-3) The yPool LP token (`yCRV`) and the Yearn vault share (`yy…`) were used as collateral by `STABLEx` (priced via yPool virtual price). After the pool was drained/imbalanced, the collateral price collapsed, leaving the newly-minted `STABLEx` effectively unbacked.
+3) The yPool LP token (`yCRV`) and the Yearn vault share (`yy…`) were used as collateral by `STABLEx` via an oracle path that multiplies by `yPool.get_virtual_price()`. After the pool was drained/imbalanced, the collateral price collapsed, leaving the newly-minted `STABLEx` effectively unbacked.
 
 ## Attacker profit
 
